@@ -3,14 +3,18 @@ import express, { request, response } from "express";
 import cors from "cors";
 import joi from "joi";
 import dayjs from "dayjs";
+import dotenv from "dotenv";
 
 
 const server = express();
 server.use(express.json());
 server.use(cors());
+dotenv.config();
+
+const PORT = process.env.PORT;
 
 //BD
-const mongoClient = new MongoClient("mongodb://localhost:27017");
+const mongoClient = new MongoClient(process.env.MONGO_URI);
 let db;
 
 mongoClient.connect().then(() => {
@@ -182,6 +186,6 @@ async function isActive () {
     };    
 }
 
-server.listen(5000, () => {
+server.listen(PORT, () => {
     console.log("Server running")
 });
